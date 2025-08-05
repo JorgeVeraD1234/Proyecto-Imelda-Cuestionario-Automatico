@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Alert, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Alert, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useState } from "react";
@@ -36,43 +36,43 @@ export const UserRegister = () => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>📝 Registro de Usuario</Text>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={globalStyles.container}>
+        <Text style={globalStyles.title}>📝 Registro de Usuario</Text>
 
-      <Text style={globalStyles.sectionTitle}>Username:</Text>
-      <TextInput
-        style={{
-          borderWidth: 1,
-          borderColor: "#999999",
-          padding: 10,
-          borderRadius: 6,
-          backgroundColor: "#ffffff",
-          marginBottom: 15,
-        }}
-        placeholder="Introduce tu nombre"
-        value={data.username}
-        onChangeText={(value) => onChange("username", value)}
-      />
+        <Text style={globalStyles.sectionTitle}>Username:</Text>
+        <TextInput
+          style={inputStyles}
+          placeholder="Introduce tu nombre"
+          placeholderTextColor="#000000"
+          value={data.username}
+          onChangeText={(value) => onChange("username", value)}
+        />
 
-      <Text style={globalStyles.sectionTitle}>Contraseña:</Text>
-      <TextInput
-        style={{
-          borderWidth: 1,
-          borderColor: "#999999",
-          padding: 10,
-          borderRadius: 6,
-          backgroundColor: "#ffffff",
-          marginBottom: 25,
-        }}
-        placeholder="Introduce tu contraseña"
-        secureTextEntry={true}
-        value={data.password}
-        onChangeText={(value) => onChange("password", value)}
-      />
+        <Text style={globalStyles.sectionTitle}>Contraseña:</Text>
+        <TextInput
+          style={inputStyles}
+          placeholder="Introduce tu contraseña"
+          placeholderTextColor="#000000"
+          secureTextEntry={true}
+          value={data.password}
+          onChangeText={(value) => onChange("password", value)}
+        />
 
-      <TouchableOpacity style={[globalStyles.button, globalStyles.logoutButton]} onPress={onPressRegister}>
-        <Text style={globalStyles.buttonText}>Finalizar</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={[globalStyles.button, globalStyles.logoutButton]} onPress={onPressRegister}>
+          <Text style={globalStyles.buttonText}>Finalizar</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
+};
+
+const inputStyles = {
+  borderWidth: 1,
+  borderColor: "#000000",
+  padding: 10,
+  borderRadius: 6,
+  backgroundColor: "#ffffff",
+  marginBottom: 20,
+  color: "#000000"
 };

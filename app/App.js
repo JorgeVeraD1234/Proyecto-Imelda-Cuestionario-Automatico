@@ -7,7 +7,8 @@ import { QuestionnaireMain } from "./views/QuestionnaireView/QuestionnaireMain.j
 import { QuestionnaireDetail } from "./views/QuestionnaireView/QuestionnaireDetail.js";
 import { CreateQuestionnaire } from './views/QuestionnaireView/QuestionnaireCreate.js'
 import { ResponderCuestionario } from './views/QuestionnaireView/ResponderCuestionario.js'
-
+import { CreateQuestion } from "./views/QuestionView/QuestionCreate.js";
+import { GetQuestions } from "./views/QuestionView/QuestionsGet.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,8 +16,6 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-
-
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Main" component={UserView} />
         <Stack.Screen name="Register" component={UserRegister} />
@@ -24,9 +23,8 @@ function App() {
         <Stack.Screen name="QuestionnaireDetail" component={QuestionnaireDetail} />
         <Stack.Screen name="CreateQuestionnaire" component={CreateQuestionnaire} />
         <Stack.Screen name="ResponderCuestionario" component={ResponderCuestionario} />
-
-
-
+        <Stack.Screen name="CreateQuestion" component={CreateQuestion} />
+        <Stack.Screen name="GetQuestions" component={GetQuestions} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -38,5 +36,6 @@ export default App;
 /* 
 navigation.navigate("QuestionnaireDetail", { id: item._id });
 ResponderCuestionario
+CreateQuestion
 
 */

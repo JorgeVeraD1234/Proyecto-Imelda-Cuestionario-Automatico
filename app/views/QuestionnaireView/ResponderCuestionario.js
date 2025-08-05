@@ -1,7 +1,7 @@
-// ResponderCuestionario.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity, ScrollView, Alert, StyleSheet } from 'react-native';
 import axios from 'axios';
+import globalStyles from '../../globalStyles';
 
 export const ResponderCuestionario = ({ route }) => {
     const { cuestionarioId } = route.params;
@@ -13,8 +13,7 @@ export const ResponderCuestionario = ({ route }) => {
     useEffect(() => {
         const obtenerCuestionario = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/api/cuestionarios/${cuestionarioId}`)
-                console.log(res.data)
+                const res = await axios.get(`http://localhost:3000/api/cuestionarios/${cuestionarioId}`);
                 setCuestionario(res.data);
             } catch (error) {
                 Alert.alert("Error", "No se pudo cargar el cuestionario.");
@@ -31,8 +30,6 @@ export const ResponderCuestionario = ({ route }) => {
 
     const enviarRespuestas = async () => {
         try {
-            console.log("Enviando respuestas...", respuestas); 
-
             const res = await axios.post(`http://localhost:3000/api/cuestionarios/${cuestionarioId}/responder`, {
                 respuestas,
             });
@@ -42,53 +39,81 @@ export const ResponderCuestionario = ({ route }) => {
         }
     };
 
-    if (cargando) return <ActivityIndicator size="large" style={{ marginTop: 50 }} />;
+    if (cargando) {
+        return (
+            <View style={globalStyles.loadingContainer}>
+                <ActivityIndicator size="large" color="#000000" />
+                <Text style={globalStyles.loadingText}>Cargando cuestionario...</Text>
+            </View>
+        );
+    }
 
-    if (!cuestionario) return <Text style={{ padding: 20 }}>Cuestionario no disponible.</Text>;
+    if (!cuestionario) {
+        return (
+            <View style={globalStyles.container}>
+                <Text style={globalStyles.errorText}>Cuestionario no disponible.</Text>
+            </View>
+        );
+    }
 
     return (
-        <ScrollView style={{ padding: 20 }}>
-            <Text style={{ fontSize: 22, fontWeight: 'bold' }}>{cuestionario.titulo}</Text>
-            <Text style={{ marginBottom: 10 }}>{cuestionario.descripcion}</Text>
+        <ScrollView style={{ flex: 1 }}>
+            <View style={globalStyles.container}>
+                <Text style={globalStyles.title}>{cuestionario.titulo}</Text>
+                <Text style={globalStyles.infoText}>{cuestionario.descripcion}</Text>
 
-            {cuestionario.preguntas.map((pregunta, index) => (
-                <View key={index} style={{ marginBottom: 20 }}>
-                    <Text style={{ fontWeight: 'bold' }}>{index + 1}. {pregunta.pregunta}</Text>
-                    {pregunta.opciones.map((opcion, i) => (
-                        <TouchableOpacity
-                            key={i}
-                            onPress={() => manejarRespuesta(index, opcion)}
-                            style={{
-                                marginVertical: 5,
-                                backgroundColor: respuestas[index] === opcion ? '#4CAF50' : '#f0f0f0',
-                                padding: 10,
-                                borderRadius: 5,
-                            }}>
-                            <Text>{opcion}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            ))}
+                {cuestionario.preguntas.map((pregunta, index) => (
+                    <View key={index} style={{ marginBottom: 20 }}>
+                        <Text style={globalStyles.sectionTitle}>{index + 1}. {pregunta.pregunta}</Text>
+                        {pregunta.opciones.map((opcion, i) => (
+                            <TouchableOpacity
+                                key={i}
+                                onPress={() => manejarRespuesta(index, opcion)}
+                                style={[
+                                    optionStyles,
+                                    respuestas[index] === opcion && selectedOptionStyles
+                                ]}
+                            >
+                                <Text style={globalStyles.cardText}>{opcion}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                ))}
 
-            <TouchableOpacity
-                onPress={enviarRespuestas}
-                style={{
-                    backgroundColor: '#2196F3',
-                    padding: 15,
-                    borderRadius: 10,
-                    marginTop: 10,
-                }}>
-                <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold' }}>Enviar respuestas</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={submitButton} onPress={enviarRespuestas}>
+                    <Text style={globalStyles.buttonText}>Enviar respuestas</Text>
+                </TouchableOpacity>
 
-            {resultado && (
-                <View style={{ marginTop: 30 }}>
-                    <Text style={{ fontSize: 18 }}>✅ Aciertos: {resultado.aciertos} / {resultado.totalPreguntas}</Text>
-                    <Text style={{ fontSize: 18 }}>📊 Porcentaje: {resultado.porcentaje}%</Text>
-                    <Text style={{ fontSize: 16, marginTop: 10 }}>{resultado.mensaje}</Text>
-                </View>
-            )}
+                {resultado && (
+                    <View style={{ marginTop: 30 }}>
+                        <Text style={globalStyles.sectionTitle}>✅ Aciertos: {resultado.aciertos} / {resultado.totalPreguntas}</Text>
+                        <Text style={globalStyles.sectionTitle}>📊 Porcentaje: {resultado.porcentaje}%</Text>
+                        <Text style={globalStyles.infoText}>{resultado.mensaje}</Text>
+                    </View>
+                )}
+            </View>
         </ScrollView>
     );
+
 };
 
+const optionStyles = {
+    backgroundColor: "#ffffff",
+    borderWidth: 1,
+    borderColor: "#000000",
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 5
+};
+
+const selectedOptionStyles = {
+    backgroundColor: "#000000"
+};
+
+const submitButton = {
+    backgroundColor: "#000000",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    alignItems: "center"
+};

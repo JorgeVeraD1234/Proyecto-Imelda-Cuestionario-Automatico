@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#f2f2f2", // gris claro
+        backgroundColor: "#ffffff", // blanco
         padding: 20,
         justifyContent: "center",
     },
@@ -16,7 +16,7 @@ const globalStyles = StyleSheet.create({
         marginBottom: 30,
     },
     button: {
-        backgroundColor: "#333333", // gris oscuro
+        backgroundColor: "#000000", // negro
         paddingVertical: 12,
         paddingHorizontal: 25,
         borderRadius: 8,
@@ -30,7 +30,7 @@ const globalStyles = StyleSheet.create({
         fontWeight: "600",
     },
     logoutButton: {
-        backgroundColor: "#555555", // gris medio
+        backgroundColor: "#000000", // negro
     },
     infoBox: {
         backgroundColor: "#ffffff", // blanco
@@ -43,11 +43,11 @@ const globalStyles = StyleSheet.create({
     },
     infoText: {
         fontSize: 16,
-        color: "#333333", // gris oscuro
+        color: "#000000", // negro
         textAlign: "center",
     },
     card: {
-        backgroundColor: "#f9f9f9", // gris muy claro
+        backgroundColor: "#ffffff", // blanco
         padding: 15,
         borderRadius: 10,
         marginBottom: 15,
@@ -61,25 +61,24 @@ const globalStyles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         marginBottom: 10,
-        color: "#333333", // gris oscuro
+        color: "#000000", // negro
     },
     loadingContainer: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#f2f2f2", // gris claro
+        backgroundColor: "#ffffff", // blanco
     },
     loadingText: {
         marginTop: 10,
         fontSize: 16,
-        color: "#777777", // gris medio
+        color: "#000000", // negro
     },
     errorText: {
         fontSize: 16,
-        color: "#555555", // gris medio en lugar de rojo
+        color: "#000000", // negro
         textAlign: "center",
     }
-
 });
 
 export default globalStyles;
